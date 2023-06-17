@@ -1,5 +1,9 @@
 package ejercicios
 
+import (
+	"sort"
+)
+
 // Problema de la mochila 0-1
 //Consiste en llenar una "mochila" con un peso limitado, por una cantidad de objetos,
 // cada uno con un peso y valor específico, máximizando el valor total almacenado.
@@ -11,5 +15,19 @@ type Objeto struct {
 }
 
 func Mochila01(objetos []Objeto, capacidad int) int {
-	panic("Implementar")
+	sort.Slice(objetos, func(i, j int) bool {
+		return objetos[i].Valor/objetos[i].Peso > objetos[j].Valor/objetos[j].Peso
+	})
+
+	pesoActual := 0
+	v_total := 0
+	for _, objeto := range objetos {
+		if pesoActual+objeto.Peso <= capacidad {
+			v_total += objeto.Valor
+			pesoActual += objeto.Peso
+		} else {
+			break
+		}
+	}
+	return v_total
 }

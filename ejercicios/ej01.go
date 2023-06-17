@@ -22,5 +22,25 @@ package ejercicios
 // Total: 15 formas
 // Devuelve la cantidad de formas de obtener x puntos al lanzar n dados de k caras
 func Dados(n, k, x int) int {
-	panic("Implementar")
+	cantidad := 0
+	dado := make([]int, n)
+
+	backtracking(dado, 0, 0, x, k, &cantidad)
+
+	return cantidad
+}
+
+func backtracking(dado []int, index, currentSum, x, k int, cantidad *int) {
+	if index == len(dado) {
+		if currentSum == x {
+			*cantidad++
+		}
+		return
+	}
+
+	for i := 1; i <= k; i++ {
+		dado[index] = i
+
+		backtracking(dado, index+1, currentSum+i, x, k, cantidad)
+	}
 }
